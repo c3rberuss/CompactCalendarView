@@ -37,7 +37,7 @@ public class CompactCalendarView extends View {
         public void onMonthScroll(Date firstDayOfNewMonth);
     }
 
-    public interface CompactCalendarAnimationListener {
+    public interface    CompactCalendarAnimationListener {
         public void onOpened();
         public void onClosed();
     }
