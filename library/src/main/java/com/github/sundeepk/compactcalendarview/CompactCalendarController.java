@@ -811,14 +811,14 @@ class CompactCalendarController {
                             drawEventIndicatorCircle(canvas, xPosition, yPosition, event.getColor());
                         }
                     } else {
+                        drawMark(eventsList, canvas, xPosition, yPosition);
+
                         yPosition += indicatorOffset;
                         // offset event indicators to draw below selected day indicators
                         // this makes sure that they do no overlap
                         if (shouldDrawIndicatorsBelowSelectedDays && (isSameDayAsCurrentDay || isCurrentSelectedDay)) {
                             yPosition += indicatorOffset;
                         }
-
-                        drawMark(eventsList, canvas, xPosition, yPosition);
 
                         if (eventsList.size() >= 3) {
                             drawEventsWithPlus(canvas, xPosition, yPosition, eventsList);
