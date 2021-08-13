@@ -8,6 +8,7 @@ public class Event {
     private long timeInMillis;
     private Object data;
     private boolean isMark = false;
+    private int textColor = -1;
 
     public Event(int color, long timeInMillis) {
         this.color = color;
@@ -26,6 +27,13 @@ public class Event {
         this.isMark = isMark;
     }
 
+    public Event(int color, long timeInMillis, boolean isMark, int textColor) {
+        this.color = color;
+        this.timeInMillis = timeInMillis;
+        this.isMark = isMark;
+        this.textColor = textColor;
+    }
+
     public int getColor() {
         return color;
     }
@@ -37,6 +45,8 @@ public class Event {
     public boolean getIsMark() {
         return isMark;
     }
+
+    public int getTextColor(){return textColor;}
 
     @Nullable
     public Object getData() {

@@ -833,17 +833,17 @@ class CompactCalendarController {
         }
     }
 
-    private void drawMark(List<Event> events, Canvas canvas, float xPosition, float yPosition){
+    private void drawMark(List<Event> events, Canvas canvas, float xPosition, float yPosition) {
         Event event = null;
 
-        for(Event e: events){
-            if(e.getIsMark()){
+        for (Event e : events) {
+            if (e.getIsMark()) {
                 event = e;
                 break;
             }
         }
 
-        if(event != null){
+        if (event != null) {
             drawDayCircleIndicator(currentDayIndicatorStyle, canvas, xPosition, yPosition, event.getColor());
         }
     }
@@ -888,26 +888,26 @@ class CompactCalendarController {
         return dayOfWeek;
     }
 
-    private Event findEventMarkByDay(int day, List<Events> events){
+    private Event findEventMarkByDay(int day, List<Events> events) {
 
         Calendar calendar = Calendar.getInstance();
 
         List<Event> eventsList = null;
 
-        for(Events e: events){
+        for (Events e : events) {
             calendar.setTimeInMillis(e.getTimeInMillis());
 
-            if(calendar.get(Calendar.DAY_OF_MONTH) == day){
+            if (calendar.get(Calendar.DAY_OF_MONTH) == day) {
                 eventsList = e.getEvents();
                 break;
             }
         }
 
-        if(eventsList != null){
-            for(Event e: eventsList){
+        if (eventsList != null) {
+            for (Event e : eventsList) {
                 calendar.setTimeInMillis(e.getTimeInMillis());
 
-                if(calendar.get(Calendar.DAY_OF_MONTH) == day){
+                if (calendar.get(Calendar.DAY_OF_MONTH) == day) {
                     return e;
                 }
             }
@@ -974,23 +974,24 @@ class CompactCalendarController {
 
                     Event event = findEventMarkByDay(day, uniqEvents);
 
-                    if(event == null){
+                    if (event == null) {
                         drawDayCircleIndicator(currentSelectedDayIndicatorStyle, canvas, xPosition, yPosition, currentSelectedDayBackgroundColor);
-                    }else{
+                        defaultCalenderTextColorToUse = currentSelectedDayTextColor;
+                    } else {
                         drawDayCircleIndicator(currentDayIndicatorStyle, canvas, xPosition, yPosition, event.getColor());
+                        defaultCalenderTextColorToUse = event.getTextColor();
                     }
-
-                    defaultCalenderTextColorToUse = currentSelectedDayTextColor;
                 } else if (isSameYearAsToday && isSameMonthAsToday && todayDayOfMonth == day && !isAnimatingWithExpose) {
                     // TODO calculate position of circle in a more reliable way
                     Event event = findEventMarkByDay(day, uniqEvents);
 
-                    if(event == null){
+                    if (event == null) {
                         drawDayCircleIndicator(currentDayIndicatorStyle, canvas, xPosition, yPosition, currentDayBackgroundColor);
-                    }else{
+                        defaultCalenderTextColorToUse = currentDayTextColor;
+                    } else {
                         drawDayCircleIndicator(currentDayIndicatorStyle, canvas, xPosition, yPosition, event.getColor());
+                        defaultCalenderTextColorToUse = event.getTextColor();
                     }
-                    defaultCalenderTextColorToUse = currentDayTextColor;
                 }
                 if (day <= 0) {
                     if (displayOtherMonthDays) {

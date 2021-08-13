@@ -289,12 +289,12 @@ public class CompactCalendarTab extends Fragment {
             return Arrays.asList(new Event(Color.argb(255, 169, 68, 65), timeInMillis, "Event at " + new Date(timeInMillis)));
         } else if ( day > 2 && day <= 4) {
             return Arrays.asList(
-                    new Event(Color.parseColor("#00ff00"), timeInMillis, true),
+                    new Event(Color.parseColor("#00ff00"), timeInMillis, true, Color.parseColor("#ff0000")),
                     new Event(Color.argb(255, 100, 68, 65), timeInMillis, "Event 2 at " + new Date(timeInMillis)));
         } else {
             return Arrays.asList(
                     new Event(Color.argb(255, 169, 68, 65), timeInMillis, "Event at " + new Date(timeInMillis) ),
-                    new Event(Color.parseColor("#0000ff"), timeInMillis, true),
+                    new Event(Color.parseColor("#0000ff"), timeInMillis, true, Color.parseColor("#ffffff")),
                     new Event(Color.argb(255, 70, 68, 65), timeInMillis, "Event 3 at " + new Date(timeInMillis)));
         }
     }
