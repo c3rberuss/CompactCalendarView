@@ -811,7 +811,7 @@ class CompactCalendarController {
                             drawEventIndicatorCircle(canvas, xPosition, yPosition, event.getColor());
                         }
                     } else {
-                        drawMark(eventsList, canvas, xPosition, yPosition);
+                        boolean result = drawMark(eventsList, canvas, xPosition, yPosition);
 
                         yPosition += indicatorOffset;
                         // offset event indicators to draw below selected day indicators
@@ -820,11 +820,11 @@ class CompactCalendarController {
                             yPosition += indicatorOffset;
                         }
 
-                        if (eventsList.size() >= 3) {
+                        if (eventsList.size() >= 3 && !result) {
                             drawEventsWithPlus(canvas, xPosition, yPosition, eventsList);
-                        } else if (eventsList.size() == 2) {
+                        } else if (eventsList.size() == 2 && !result) {
                             drawTwoEvents(canvas, xPosition, yPosition, eventsList);
-                        } else if (eventsList.size() == 1) {
+                        } else if (eventsList.size() == 1 && !result) {
                             drawSingleEvent(canvas, xPosition, yPosition, eventsList);
                         }
                     }
@@ -833,7 +833,7 @@ class CompactCalendarController {
         }
     }
 
-    private void drawMark(List<Event> events, Canvas canvas, float xPosition, float yPosition) {
+    private boolean drawMark(List<Event> events, Canvas canvas, float xPosition, float yPosition) {
         Event event = null;
 
         for (Event e : events) {
@@ -845,7 +845,10 @@ class CompactCalendarController {
 
         if (event != null) {
             drawDayCircleIndicator(currentDayIndicatorStyle, canvas, xPosition, yPosition, event.getColor());
+            return true;
         }
+
+        return false;
     }
 
     private void drawSingleEvent(Canvas canvas, float xPosition, float yPosition, List<Event> eventsList) {
@@ -969,11 +972,11 @@ class CompactCalendarController {
                 }
             } else {
                 int day = ((dayRow - 1) * 7 + colDirection + 1) - firstDayOfMonth;
+
                 int defaultCalenderTextColorToUse = calenderTextColor;
+
                 if (currentCalender.get(Calendar.DAY_OF_MONTH) == day && isSameMonthAsCurrentCalendar && !isAnimatingWithExpose) {
-
                     Event event = findEventMarkByDay(day, uniqEvents);
-
                     if (event == null) {
                         drawDayCircleIndicator(currentSelectedDayIndicatorStyle, canvas, xPosition, yPosition, currentSelectedDayBackgroundColor);
                         defaultCalenderTextColorToUse = currentSelectedDayTextColor;
@@ -984,7 +987,6 @@ class CompactCalendarController {
                 } else if (isSameYearAsToday && isSameMonthAsToday && todayDayOfMonth == day && !isAnimatingWithExpose) {
                     // TODO calculate position of circle in a more reliable way
                     Event event = findEventMarkByDay(day, uniqEvents);
-
                     if (event == null) {
                         drawDayCircleIndicator(currentDayIndicatorStyle, canvas, xPosition, yPosition, currentDayBackgroundColor);
                         defaultCalenderTextColorToUse = currentDayTextColor;
@@ -992,7 +994,11 @@ class CompactCalendarController {
                         drawDayCircleIndicator(currentDayIndicatorStyle, canvas, xPosition, yPosition, event.getColor());
                         defaultCalenderTextColorToUse = event.getTextColor();
                     }
+                }else if(!isAnimatingWithExpose && uniqEvents != null){
+                    Event event = findEventMarkByDay(day, uniqEvents);
+                    defaultCalenderTextColorToUse = event != null ? event.getTextColor() : calenderTextColor;
                 }
+
                 if (day <= 0) {
                     if (displayOtherMonthDays) {
                         // Display day month before
