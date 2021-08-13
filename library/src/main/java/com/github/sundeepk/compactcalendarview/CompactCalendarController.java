@@ -910,7 +910,7 @@ class CompactCalendarController {
             for (Event e : eventsList) {
                 calendar.setTimeInMillis(e.getTimeInMillis());
 
-                if (calendar.get(Calendar.DAY_OF_MONTH) == day) {
+                if (calendar.get(Calendar.DAY_OF_MONTH) == day && e.getIsMark()) {
                     return e;
                 }
             }
