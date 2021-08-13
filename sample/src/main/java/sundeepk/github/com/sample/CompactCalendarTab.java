@@ -101,7 +101,9 @@ public class CompactCalendarTab extends Fragment {
                     Log.d(TAG, bookingsFromMap.toString());
                     mutableBookings.clear();
                     for (Event booking : bookingsFromMap) {
-                        mutableBookings.add((String) booking.getData());
+                        if(booking.getData() != null){
+                            mutableBookings.add((String) booking.getData());
+                        }
                     }
                     adapter.notifyDataSetChanged();
                 }
